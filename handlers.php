@@ -30,6 +30,25 @@ function handle_ping(){
 }
 
 
+function check_permissions($session) {
+
+    $request = new FacebookRequest(
+        $session,
+        'GET',
+        '/me/permissions'
+    );
+
+    try {
+        $response = $request->execute();
+        // TODO: verify permission
+        $graphObject = $response->getGraphObject();
+    } catch (FacebookRequestException $ex) {
+        Flight::error($ex);
+    } catch (\Exception $ex) {
+        Flight::error($ex);
+    }
+}
+
 // In the FB callback, we show a form to the user
 // or an error message if something went wrong.
 function handle_fb_callback() {
@@ -45,9 +64,16 @@ function handle_fb_callback() {
     }
     if ($session) {
         $_SESSION['FBTOKEN'] = $session->getToken();
-        // Render message form
-        Flight::render('', array('post_action' => 'handle_checkin'));
-        // TODO: also verify permissions here?
+        if (check_permissions($session)) {
+            // TODO: generic message interface? e.g. session.flash? 
+            Flight::render('fb_callback', array('post_action' => get_setting('MY_URL') .'checkin'));
+        } else {
+            // 
+            Flight::render('fb_callback', array('error' => 'Permission required!',
+                'retry_url' => get_setting('MY_URL') . 'login'));
+            // TODO: handle_login must be changed to handle requests without GET
+            // params! 
+        }
     }
     else {
         Flight:error(new Exception('Should never get here.'));
