@@ -94,7 +94,9 @@ function fblogin() {
 
     // Simplification: always assume we are not logged in!
     $helper = new FacebookRedirectLoginHelper(get_setting('MY_URL') . 'fb_callback/');
-    $loginUrl = $helper->getLoginUrl();
+    // We do want to publish to the user's wall!
+    $scope = array('publish_actions');
+    $loginUrl = $helper->getLoginUrl($scope);
     Flight::render('fblogin', array('url' = > $loginUrl));
 
 
