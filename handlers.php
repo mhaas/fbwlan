@@ -3,7 +3,9 @@
 session_start();
 
 define('FACEBOOK_SDK_V4_SRC_DIR', '/include/facebook-php-sdk-v4/src/Facebook/');
-require '/include/facebook-php-sdk-v4/autoload.php';
+require ('/include/facebook-php-sdk-v4/autoload.php');
+
+require('settings.php');
 
 
 define('STAGE_LOGIN', 'login');
@@ -14,20 +16,12 @@ define('AUTH_ALLOWED', '1');
 define('AUTH_ERROR', '-1');
 
 
-// TODO: these must come from settings
-define('APP_ID', 'SOME_ID');
-define('APP_SECRET', 'SOME_SECRET');
-
-define('MY_URL', 'http://localhost/');
-
-define('PAGE_ID', '195413467191160');
-
-
 use Facebook\FacebookSession;
 use Facebook\FacebookRequest;
 use Facebook\FacebookRequestException;
 
-FacebookSession::setDefaultApplication('YOUR_APP_ID','YOUR_APP_SECRET');
+FacebookSession::setDefaultApplication(get_setting(KEY_APP_ID),
+     get_setting(KEY_APP_SECRET));
 
 function handle_ping(){
     return 'Pong';
@@ -47,7 +41,7 @@ function handle_fb_callback() {
     if ($session) {
         $_SESSION['FBTOKEN'] = $session->getToken();
         // Render message form
-        Flight::render('')
+        Flight::render('', array('post_action' => 'handle_checkin'));
     }
     else {
         // Render error message
@@ -64,7 +58,7 @@ function handle_checkin() {
     }
     $message = Flight::request()->query->message;
 
-    $config = array(place => PLACE_ID);
+    $config = array(place => get_setting(KEY_PLACE_ID));
     if (! empty($message)) {
         array['message'] = $message;
     }
@@ -140,16 +134,11 @@ function write_auth_response($code) {
 
 function login_success() {
     //  http://" . $gw_address . ":" . $gw_port . "/wifidog/auth?token=" . $token
-    // TODO: get token
-    $token = generate_token();
+    $token = make_token();
     $_SESSION['gw_address'] = $gw_address;
     $_SESSION['gw_port'] = $gw_port;
     Flight::redirect('http://' . $_SESSION['gw_address'] . ':'
         . $_SESSION['gw_port'] . '/wifidog/auth?token=' . $token);
 }
 
-function generate_token() {
-    // Taken from wifidog Token.php, but use sha1 instead of md5sum
-    return sha1(uniqid(rand(), 1));
-}
 
