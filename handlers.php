@@ -2,11 +2,20 @@
 
 session_start();
 
+
+require_once('settings.php');
+
+
 define('FACEBOOK_SDK_V4_SRC_DIR', '/include/facebook-php-sdk-v4/src/Facebook/');
-require ('/include/facebook-php-sdk-v4/autoload.php');
+require_once('/include/facebook-php-sdk-v4/autoload.php');
 
-require('settings.php');
+use Facebook\FacebookSession;
+use Facebook\FacebookRequest;
+use Facebook\FacebookRequestException;
 
+
+FacebookSession::setDefaultApplication(get_setting(KEY_APP_ID),
+     get_setting(KEY_APP_SECRET));
 
 define('STAGE_LOGIN', 'login');
 define('STAGE_COUNTER', 'counters');
@@ -16,17 +25,13 @@ define('AUTH_ALLOWED', '1');
 define('AUTH_ERROR', '-1');
 
 
-use Facebook\FacebookSession;
-use Facebook\FacebookRequest;
-use Facebook\FacebookRequestException;
-
-FacebookSession::setDefaultApplication(get_setting(KEY_APP_ID),
-     get_setting(KEY_APP_SECRET));
-
 function handle_ping(){
     return 'Pong';
 }
 
+
+// In the FB callback, we show a form to the user
+// or an error message if something went wrong.
 function handle_fb_callback() {
     $helper = new FacebookRedirectLoginHelper();
     try {
@@ -42,12 +47,11 @@ function handle_fb_callback() {
         $_SESSION['FBTOKEN'] = $session->getToken();
         // Render message form
         Flight::render('', array('post_action' => 'handle_checkin'));
+        // TODO: also verify permissions here?
     }
     else {
-        // Render error message
+        Flight:error(new Exception('Should never get here.'));
     }
-    
-
 }
 
 function handle_checkin() {
@@ -77,6 +81,12 @@ function handle_checkin() {
     } catch (\Exception $ex) {
         Flight::error($ex);
     }
+
+    // Everything is OK, users gets access and is handed back to Gateway
+    login_success();
+
+    // TODO: show a success message?
+    // This would probably depend on the gateway
 }
     
 
@@ -108,10 +118,6 @@ function handle_login() {
 // Gateway request
 function handle_auth() {
     $request = Flight::request();
-    // stage=
-    //ip=
-    //mac=
-    //token=
     //incoming=
     //outgoing=
     $stage = $request->query->stage;
