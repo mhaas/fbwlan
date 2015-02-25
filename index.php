@@ -9,3 +9,7 @@ Flight::route('/auth', 'handle_auth');
 
 Flight::route('/login', 'handle_login');
 
+
+Flight::start();
+
+?>
