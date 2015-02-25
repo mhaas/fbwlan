@@ -93,7 +93,7 @@ function handle_checkin() {
 function fblogin() {
 
     // Simplification: always assume we are not logged in!
-    $helper = new FacebookRedirectLoginHelper(MY_URL . 'fb_callback/');
+    $helper = new FacebookRedirectLoginHelper(get_setting('MY_URL') . 'fb_callback/');
     $loginUrl = $helper->getLoginUrl();
     Flight::render('fblogin', array('url' = > $loginUrl));
 
