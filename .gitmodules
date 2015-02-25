@@ -1,3 +1,6 @@
 [submodule "include/flight"]
 	path = include/flight
 	url = https://github.com/mikecao/flight/
+[submodule "include/facebook-php-sdk-v4"]
+	path = include/facebook-php-sdk-v4
+	url = https://github.com/facebook/facebook-php-sdk-v4.git
