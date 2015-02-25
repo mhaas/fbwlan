@@ -31,7 +31,7 @@ function clear_token($key, $value) {
 
 function clear_old_tokens() {
     
-    $stmt = $db->prepare('DELETE FROM tokens WHERE date < DATE_SUB(NOW(), INTERVAL :duration DAY');
+    $stmt = $db->prepare('DELETE FROM tokens WHERE date < DATE_SUB(NOW(), INTERVAL :duration MINUTES)');
     $stmt->bindParam(':duration', get_setting(KEY_SESSION_DURATION));
     $stmt->execute();
     // http://stackoverflow.com/a/13009906
