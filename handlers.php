@@ -114,21 +114,32 @@ function handle_auth() {
     //token=
     //incoming=
     //outgoing=
-    $gw_address = $request->query->stage;
+    $stage = $request->query->stage;
+    $ip = $request->query->ip;
+    $mac = $request->query->mac;
+    $token = $request->query->token;
 
-    if (empty($gw_address) || empty($gw_port) || empty($gw_id)) {
-        Flight::Error('stage parameter empty!');
+    if (empty($stage || empty($ip) || empty($mac) || empty($token)) {
+        //Flight::Error('Required parameters empty!');
+        write_auth_response(AUTH_ERROR);
     }
+    // Do some housekeeping
+    clear_old_tokens();
+
     if ($stage == STAGE_COUNTER) {
         return;
     }
-    // TODO: look up in global session? 
+    if (is_token_valid($token)) {
+        write_auth_response(AUTH_ALLOWED);
+    }
+    write_auth_response(AUTH_DENIED);
+
 }
 
 
 
 function write_auth_response($code) {
-    echo 'Auth: ' . $code;
+    echo 'Auth: ' . $code . '\n';
 }
 
 
