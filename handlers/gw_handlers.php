@@ -2,11 +2,7 @@
 
 // This module handles all communication between script and gateway
 
-session_start();
-
-
 require_once('settings.php');
-
 
 define('STAGE_LOGIN', 'login');
 define('STAGE_COUNTER', 'counters');

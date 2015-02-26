@@ -1,5 +1,7 @@
 <?php
 
+session_start();
+
 require_once('include/flight/Flight.php');
 
 require_once('handlers/fb_handlers.php');
