@@ -12,14 +12,22 @@ ini_set('session.cookie_httponly', '1');
 // HTTPS only!
 ini_set('session.cookie_secure', '1');
 
-session_start();
-
-
-
-require_once('include/flight/Flight.php');
 
 // Load constants defined in config
 require_once('config.php');
+
+// A special bit of configuration for our host:
+// An SSL proxy is provided at https://sslsites.de/your.domain/
+// By default, a cookie is set for sslsites.de which means
+// other websites available over that proxy can read the cookies!
+
+init_set('session.cookie_path', parse_url(MY_URL, PHP_URL_PATH));
+// TODO: does this work across a proxy?
+
+session_start();
+
+require_once('include/flight/Flight.php');
+
 
 // Sets up DB
 require_once('db.php');
