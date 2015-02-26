@@ -42,11 +42,18 @@ function check_permissions($session) {
         $response = $request->execute();
         // TODO: verify permission
         $graphObject = $response->getGraphObject();
+        // http://stackoverflow.com/q/23527919
+        foreach ($graphObject as $permission) {
+            if ($permission['permission'] == 'publish_actions') {
+                return $permission['status'] == 'granted';
+            }
+        }
     } catch (FacebookRequestException $ex) {
         Flight::error($ex);
     } catch (\Exception $ex) {
         Flight::error($ex);
     }
+    return false;
 }
 
 // In the FB callback, we show a form to the user
