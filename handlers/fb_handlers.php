@@ -1,11 +1,10 @@
-<?php
-
-session_start();
+<?php 
 
 
-require_once('settings.php');
+// This module handles all interaction with the user's browser
+// and Facebook
 
-
+// TODO: this only works if the script is installed in root
 define('FACEBOOK_SDK_V4_SRC_DIR', '/include/facebook-php-sdk-v4/src/Facebook/');
 require_once('/include/facebook-php-sdk-v4/autoload.php');
 
@@ -17,16 +16,15 @@ use Facebook\FacebookRequestException;
 FacebookSession::setDefaultApplication(get_setting(KEY_APP_ID),
      get_setting(KEY_APP_SECRET));
 
-define('STAGE_LOGIN', 'login');
-define('STAGE_COUNTER', 'counters');
 
-define('AUTH_DENIED', '0');
-define('AUTH_ALLOWED', '1');
-define('AUTH_ERROR', '-1');
-
-
-function handle_ping(){
-    return 'Pong';
+function render_boilerplate() {
+    Flight::render('head',
+        array(
+            'my_url' => get_setting(KEY_MY_URL),
+            'title' => _('Log in at ') . get_setting(KEY_PAGE_NAME),
+        ),
+        'header_content');
+    Flight::render('foot', 'foot_content');
 }
 
 
@@ -59,6 +57,7 @@ function check_permissions($session) {
 // In the FB callback, we show a form to the user
 // or an error message if something went wrong.
 function handle_fb_callback() {
+    render_boilerplate();
     $helper = new FacebookRedirectLoginHelper();
     try {
         $session = $helper->getSessionFromRedirect();
@@ -93,7 +92,7 @@ function handle_fb_callback() {
 }
 
 function handle_checkin() {
-
+    render_boilerplate();
     $token = $_SESSION['FBTOKEN'];
     if (empty($token)) {
         Flight:error(new Exception('No FB token in session!'));
@@ -146,6 +145,7 @@ function fblogin() {
 
 function handle_access_code() {
 
+    render_boilerplate();
     $request = Flight::request();
     $code = $request->query->access_code;
     if (empty($code)) {
@@ -184,40 +184,8 @@ function handle_login() {
         Flight::error(new Exception('Gateway parameters not set in login handler!'));
     }
     Flight::set('retry_url', get_setting('MY_URL') .'login'));
+    render_boilerplate();
     fblogin();
-}
-
-// Gateway request
-function handle_auth() {
-    $request = Flight::request();
-    //incoming=
-    //outgoing=
-    $stage = $request->query->stage;
-    $ip = $request->query->ip;
-    $mac = $request->query->mac;
-    $token = $request->query->token;
-
-    if (empty($stage || empty($ip) || empty($mac) || empty($token)) {
-        //Flight::Error('Required parameters empty!');
-        write_auth_response(AUTH_ERROR);
-    }
-    // Do some housekeeping
-    clear_old_tokens();
-
-    if ($stage == STAGE_COUNTER) {
-        return;
-    }
-    if (is_token_valid($token)) {
-        write_auth_response(AUTH_ALLOWED);
-    }
-    write_auth_response(AUTH_DENIED);
-
-}
-
-
-
-function write_auth_response($code) {
-    echo 'Auth: ' . $code . '\n';
 }
 
 
@@ -229,5 +197,3 @@ function login_success() {
     Flight::redirect('http://' . $_SESSION['gw_address'] . ':'
         . $_SESSION['gw_port'] . '/wifidog/auth?token=' . $token);
 }
-
-

@@ -4,7 +4,7 @@
        <div class="pure-u-1 pure-u-md-2-3">
         <p> <?php
             echo _('We offer free Wifi.');
-            echo _('In return, we ask you to return the favor and check in to our location on Facebook.');
+            echo _('We\d like to ask you to return the favor and check in to our location on Facebook.');
             echo _('So, let your friends know you\'re here and start surfing the web!');
             ?>
         </p>
