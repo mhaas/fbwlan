@@ -65,12 +65,13 @@ function handle_fb_callback() {
     if ($session) {
         $_SESSION['FBTOKEN'] = $session->getToken();
         if (check_permissions($session)) {
-            // TODO: generic message interface? e.g. session.flash? 
             Flight::render('fb_callback', array('post_action' => get_setting('MY_URL') .'checkin'));
         } else {
             // 
-            Flight::render('fb_callback', array('error' => 'Permission required!',
-                'retry_url' => get_setting('MY_URL') . 'login'));
+            Flight::render('denied', array(
+                'msg' => _('The ability to post to Facebook on your behalf is required.'),
+                'retry_url' => Flight::get('retry_url'),
+            ));
             // TODO: handle_login must be changed to handle requests without GET
             // params! 
         }
@@ -122,15 +123,40 @@ function fblogin() {
     $helper = new FacebookRedirectLoginHelper(get_setting('MY_URL') . 'fb_callback/');
     // We do want to publish to the user's wall!
     $scope = array('publish_actions');
-    $loginUrl = $helper->getLoginUrl($scope);
-    Flight::render('fblogin', array('url' = > $loginUrl));
+    $fb_login_url = $helper->getLoginUrl($scope);
+    $code_login_url = get_setting('MY_URL') . 'access_code/';
+    Flight::render('login', array(
+        'fburl' => $fb_login_url,
+        'codeurl' =>  $code_login_url
+        ));
+
+}
 
 
+function handle_access_code() {
+
+    $request = Flight::request();
+    $code = $request->query->access_code;
+    if (empty($code)) {
+        Flight::render('denied', array(
+            'msg' => _('No access code sent.')
+            'retry_url' => Flight::get('retry_url'),
+        ));
+    }
+    if ($code != get_setting(KEY_ACCESS_CODE)) {
+        Flight::render('denied', array(
+            'msg' => _('Wrong access code.'),
+            'retry_url' => Flight::get('retry_url'),
+        ));
+    } else {
+        login_success();
+    }
 }
 
 
 // User request
 function handle_login() {
+    $request = Flight::request();
     //login/?gw_address=%s&gw_port=%d&gw_id=%s&url=%s 
     $gw_address = $request->query->gw_address;
     $gw_port = $request->query->gw_port;
@@ -140,6 +166,7 @@ function handle_login() {
     $_SESSION['gw_port'] = $gw_port;
     $_SESSION['gw_id'] = $gw_id;
     $_SESSION['req_url'] = $req_url;
+    Flight::set('retry_url', get_setting('MY_URL') .'login'));
     fblogin();
 }
 
