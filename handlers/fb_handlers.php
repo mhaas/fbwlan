@@ -15,15 +15,15 @@ use Facebook\FacebookRequest;
 use Facebook\FacebookRequestException;
 
 
-FacebookSession::setDefaultApplication(get_setting(KEY_APP_ID),
-     get_setting(KEY_APP_SECRET));
+FacebookSession::setDefaultApplication(APP_ID,
+     APP_SECRET);
 
 
 function render_boilerplate() {
     Flight::render('head',
         array(
-            'my_url' => get_setting(KEY_MY_URL),
-            'title' => _('Log in at ') . get_setting(KEY_PAGE_NAME),
+            'my_url' => MY_URL,
+            'title' => _('Log in at ') . PAGE_NAME,
         ),
         'header_content');
     Flight::render('foot', 'foot_content');
@@ -74,9 +74,9 @@ function handle_fb_callback() {
         $_SESSION['FBTOKEN'] = $session->getToken();
         if (check_permissions($session)) {
             Flight::render('fb_callback', array(
-                'post_action' => get_setting('MY_URL') .'checkin'),
+                'post_action' => MY_URL .'checkin'),
                 'suggested_message' => get_suggested_message(),
-                'place_name' => get_setting(KEY_PAGE_NAME),
+                'place_name' => PAGE_NAME,
                 'retry_url' => Flight::get('retry_url'));
         } else {
             // 
@@ -101,7 +101,7 @@ function handle_checkin() {
     }
     $message = Flight::request()->query->message;
 
-    $config = array(place => get_setting(KEY_PLACE_ID));
+    $config = array(place => PLACE_ID);
     if (! empty($message)) {
         array['message'] = $message;
     }
@@ -132,11 +132,11 @@ function handle_checkin() {
 function fblogin() {
 
     // Simplification: always assume we are not logged in!
-    $helper = new FacebookRedirectLoginHelper(get_setting('MY_URL') . 'fb_callback/');
+    $helper = new FacebookRedirectLoginHelper(MY_URL . 'fb_callback/');
     // We do want to publish to the user's wall!
     $scope = array('publish_actions');
     $fb_login_url = $helper->getLoginUrl($scope);
-    $code_login_url = get_setting('MY_URL') . 'access_code/';
+    $code_login_url = MY_URL . 'access_code/';
     Flight::render('login', array(
         'fburl' => $fb_login_url,
         'codeurl' =>  $code_login_url
@@ -156,7 +156,7 @@ function handle_access_code() {
             'retry_url' => Flight::get('retry_url'),
         ));
     }
-    if ($code != get_setting(KEY_ACCESS_CODE)) {
+    if ($code != ACCESS_CODE) {
         Flight::render('denied', array(
             'msg' => _('Wrong access code.'),
             'retry_url' => Flight::get('retry_url'),
@@ -185,7 +185,7 @@ function handle_login() {
         // reg_url is not that important and might be empty?
         Flight::error(new Exception('Gateway parameters not set in login handler!'));
     }
-    Flight::set('retry_url', get_setting('MY_URL') .'login'));
+    Flight::set('retry_url', MY_URL .'login'));
     render_boilerplate();
     fblogin();
 }

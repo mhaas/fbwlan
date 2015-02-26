@@ -2,7 +2,7 @@
 
 require_once('include/flight/Flight.php');
 
-require_once('settings.php');
+require_once('config.php');
 
 $db = Flight::db();
 
@@ -32,7 +32,7 @@ function clear_token($key, $value) {
 function clear_old_tokens() {
     
     $stmt = $db->prepare('DELETE FROM tokens WHERE date < DATE_SUB(NOW(), INTERVAL :duration MINUTES)');
-    $stmt->bindParam(':duration', get_setting(KEY_SESSION_DURATION));
+    $stmt->bindParam(':duration', SESSION_DURATION);
     $stmt->execute();
     // http://stackoverflow.com/a/13009906
 }

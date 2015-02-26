@@ -14,7 +14,12 @@ ini_set('session.cookie_secure', '1');
 
 session_start();
 
+
+
 require_once('include/flight/Flight.php');
+
+// Load constants defined in config
+require_once('config.php');
 
 // Sets up DB
 require_once('db.php');
