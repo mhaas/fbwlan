@@ -29,9 +29,6 @@ session_start();
 require_once('include/flight/Flight.php');
 
 
-// Sets up DB
-require_once('db.php');
-
 require_once('handlers/fb_handlers.php');
 
 Flight::route('/login', 'handle_login');
