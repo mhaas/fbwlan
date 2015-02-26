@@ -2,8 +2,6 @@
 
 // This module handles all communication between script and gateway
 
-require_once('/settings.php');
-
 define('STAGE_LOGIN', 'login');
 define('STAGE_COUNTER', 'counters');
 
@@ -27,7 +25,7 @@ function handle_auth() {
     $mac = $request->query->mac;
     $token = $request->query->token;
 
-    if (empty($stage || empty($ip) || empty($mac) || empty($token)) {
+    if (empty($stage) || empty($ip) || empty($mac) || empty($token)) {
         //Flight::Error('Required parameters empty!');
         write_auth_response(AUTH_ERROR);
     }

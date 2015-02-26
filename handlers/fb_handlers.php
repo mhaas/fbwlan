@@ -4,11 +4,9 @@
 // This module handles all interaction with the user's browser
 // and Facebook
 
-require_once('/settings.php');
-
 // TODO: this only works if the script is installed in root
-define('FACEBOOK_SDK_V4_SRC_DIR', '/include/facebook-php-sdk-v4/src/Facebook/');
-require_once('/include/facebook-php-sdk-v4/autoload.php');
+define('FACEBOOK_SDK_V4_SRC_DIR', __DIR__ . '/../include/facebook-php-sdk-v4/src/Facebook/');
+require_once(__DIR__ . '/../include/facebook-php-sdk-v4/autoload.php');
 
 use Facebook\FacebookSession;
 use Facebook\FacebookRequest;
@@ -74,10 +72,10 @@ function handle_fb_callback() {
         $_SESSION['FBTOKEN'] = $session->getToken();
         if (check_permissions($session)) {
             Flight::render('fb_callback', array(
-                'post_action' => MY_URL .'checkin'),
+                'post_action' => MY_URL .'checkin',
                 'suggested_message' => get_suggested_message(),
                 'place_name' => PAGE_NAME,
-                'retry_url' => Flight::get('retry_url'));
+                'retry_url' => Flight::get('retry_url')));
         } else {
             // 
             Flight::render('denied', array(
@@ -89,7 +87,7 @@ function handle_fb_callback() {
         }
     }
     else {
-        Flight:error(new Exception('Should never get here.'));
+        Flight::error(new Exception('Should never get here.'));
     }
 }
 
@@ -103,14 +101,14 @@ function handle_checkin() {
 
     $config = array(place => PLACE_ID);
     if (! empty($message)) {
-        array['message'] = $message;
+        $config['message'] = $message;
     }
 
     $request = new FacebookRequest(
         $session,
         'POST',
-        '/me/feed'
-        $config,
+        '/me/feed',
+        $config
     );
 
     try {
@@ -152,7 +150,7 @@ function handle_access_code() {
     $code = $request->query->access_code;
     if (empty($code)) {
         Flight::render('denied', array(
-            'msg' => _('No access code sent.')
+            'msg' => _('No access code sent.'),
             'retry_url' => Flight::get('retry_url'),
         ));
     }
@@ -185,7 +183,7 @@ function handle_login() {
         // reg_url is not that important and might be empty?
         Flight::error(new Exception('Gateway parameters not set in login handler!'));
     }
-    Flight::set('retry_url', MY_URL .'login'));
+    Flight::set('retry_url', MY_URL .'login');
     render_boilerplate();
     fblogin();
 }
