@@ -4,6 +4,8 @@
 // This module handles all interaction with the user's browser
 // and Facebook
 
+require_once('/settings.php');
+
 // TODO: this only works if the script is installed in root
 define('FACEBOOK_SDK_V4_SRC_DIR', '/include/facebook-php-sdk-v4/src/Facebook/');
 require_once('/include/facebook-php-sdk-v4/autoload.php');
