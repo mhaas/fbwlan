@@ -161,7 +161,9 @@ function handle_access_code() {
 // User request
 function handle_login() {
     $request = Flight::request();
-    //login/?gw_address=%s&gw_port=%d&gw_id=%s&url=%s 
+    //login/?gw_address=%s&gw_port=%d&gw_id=%s&url=%s
+    // If we get called without the gateway parameters, then we better
+    // have these in the session already.
     $gw_address = $request->query->gw_address;
     $gw_port = $request->query->gw_port;
     $gw_id = $request->query->gw_id;
@@ -170,6 +172,10 @@ function handle_login() {
     $_SESSION['gw_port'] = $gw_port;
     $_SESSION['gw_id'] = $gw_id;
     $_SESSION['req_url'] = $req_url;
+    if (empty($_SESSION['gw_address']) || empty($_SESSION['gw_port']) || empty($_SESSION['gw_id'])) {
+        // reg_url is not that important and might be empty?
+        Flight::error(new Exception('Gateway parameters not set in login handler!'));
+    }
     Flight::set('retry_url', get_setting('MY_URL') .'login'));
     fblogin();
 }
