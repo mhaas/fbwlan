@@ -25,7 +25,7 @@
             <form class="pure-form">
                 <fieldset>
                     <legend><?php echo _('Access code'); ?></legend>
-                    <input type="text" placeholder="XXXXXX" name="access_code">
+                    <input type="text" placeholder="XXXXXX" name="access_code"></input>
                     <button type="submit" class="pure-button pure-button-primary" action="<?php echo $codeurl; ?>">
                         <?php echo _('Sign in'); ?>
                     </button>
