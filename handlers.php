@@ -65,7 +65,11 @@ function handle_fb_callback() {
     if ($session) {
         $_SESSION['FBTOKEN'] = $session->getToken();
         if (check_permissions($session)) {
-            Flight::render('fb_callback', array('post_action' => get_setting('MY_URL') .'checkin'));
+            Flight::render('fb_callback', array(
+                'post_action' => get_setting('MY_URL') .'checkin'),
+                'suggested_message' => get_suggested_message(),
+                'place_name' => get_setting(KEY_PAGE_NAME),
+                'retry_url' => Flight::get('retry_url'));
         } else {
             // 
             Flight::render('denied', array(

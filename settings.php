@@ -9,6 +9,7 @@ $db = Flight::db();
 define('KEY_APP_ID', 'APP_ID');
 define('KEY_APP_SECRET', 'APP_SECRET');
 define('KEY_PAGE_ID', 'PAGE_ID');
+define('KEY_PAGE_NAME', 'PAGE_NAME');
 define('KEY_MY_URL', 'MY_URL');
 define('KEY_SESSION_DURATION', 'SESSION_DURATION');
 define('KEY_ACCESS_CODE', 'ACCESS_CODE');
