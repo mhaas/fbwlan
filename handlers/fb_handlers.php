@@ -11,7 +11,7 @@ require_once(__DIR__ . '/../include/facebook-php-sdk-v4/autoload.php');
 use Facebook\FacebookSession;
 use Facebook\FacebookRequest;
 use Facebook\FacebookRequestException;
-
+use Facebook\FacebookRedirectLoginHelper;
 
 FacebookSession::setDefaultApplication(APP_ID,
      APP_SECRET);
@@ -23,8 +23,8 @@ function render_boilerplate() {
             'my_url' => MY_URL,
             'title' => _('Log in at ') . PAGE_NAME,
         ),
-        'header_content');
-    Flight::render('foot', 'foot_content');
+        'head');
+    Flight::render('foot', array(), 'foot');
 }
 
 
