@@ -13,7 +13,7 @@
             <!-- .pure-img makes images responsive -->
             <img class="pure-img" src="<?php echo $my_url; ?>static/logo.jpg"/>
         </div>
-
+    </div>
 
 
 
