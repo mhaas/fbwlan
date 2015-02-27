@@ -8,13 +8,13 @@ define('DB_NAME', 'database');
 define('DB_USER', 'user');
 define('DB_PASS', 'pass');
 
-define('KEY_APP_ID', 'APP_ID');
-define('KEY_APP_SECRET', 'APP_SECRET');
-define('KEY_PAGE_ID', 'PAGE_ID');
-define('KEY_PAGE_NAME', 'PAGE_NAME');
-define('KEY_MY_URL', 'MY_URL');
-define('KEY_SESSION_DURATION', 'SESSION_DURATION');
-define('KEY_ACCESS_CODE', 'ACCESS_CODE');
+define('APP_ID', 'APP_ID');
+define('APP_SECRET', 'APP_SECRET');
+define('PAGE_ID', 'PAGE_ID');
+define('PAGE_NAME', 'PAGE_NAME');
+define('MY_URL', 'MY_URL');
+define('SESSION_DURATION', 'SESSION_DURATION');
+define('ACCESS_CODE', 'ACCESS_CODE');
 
 
 ?>
