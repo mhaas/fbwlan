@@ -1,0 +1,10 @@
+
+put index.php
+put config.php
+put tokens.php
+put htaccess -o .htaccess
+mirror -R views
+mirror -R handlers
+mirror -R include
+
+
