@@ -58,7 +58,7 @@ function check_permissions($session) {
 // or an error message if something went wrong.
 function handle_fb_callback() {
     render_boilerplate();
-    $helper = new FacebookRedirectLoginHelper();
+    $helper = new FacebookRedirectLoginHelper(MY_URL . 'fb_callback/');
     try {
         $session = $helper->getSessionFromRedirect();
     } catch(FacebookRequestException $ex) {
