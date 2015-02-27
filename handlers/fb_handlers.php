@@ -112,7 +112,8 @@ function handle_checkin() {
         '/me/feed',
         $config
     );
-
+    // Some exceptions can be caught and handled sanely,
+    // e.g. Duplicate status message (506)
     try {
         $response = $request->execute();
     } catch (FacebookRequestException $ex) {
