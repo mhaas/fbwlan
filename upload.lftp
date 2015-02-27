@@ -6,5 +6,5 @@ put htaccess -o .htaccess
 mirror -R views
 mirror -R handlers
 mirror -R include
-
+mirror -R static
 
