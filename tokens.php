@@ -12,7 +12,7 @@ Flight::register('db', 'PDO', array('mysql:host='. DB_HOST . ';port=' . DB_PORT 
 
 function init_token_db() {
     $db = Flight::db();
-    $db->exec('CREATE TABLE IF NOT EXISTS tokens id INT PRIMARY KEY, token CHAR(40) NOT NULL UNIQUE, date timestamp NOT NULL');
+    $db->exec('CREATE TABLE IF NOT EXISTS tokens (id INT PRIMARY KEY, token CHAR(40) NOT NULL UNIQUE, date timestamp NOT NULL)');
 }
 
 function generate_token() {
