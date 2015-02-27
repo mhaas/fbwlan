@@ -30,7 +30,7 @@
     </div>
     <div class="pure-g">
         <div class="pure-u-1">
-            <p> <?php echo_('If you do not want to check in, you can still use the access code!') ; ?> <p>
+            <p> <?php echo _('If you do not want to check in, you can still use the access code!') ; ?> <p>
             <a href="<?php echo $retry_url; ?>" class="pure-button"><?php echo _('Back to login'); ?></a>
         </div>
     </div>
