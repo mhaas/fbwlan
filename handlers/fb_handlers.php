@@ -195,8 +195,6 @@ function handle_login() {
 function login_success() {
     //  http://" . $gw_address . ":" . $gw_port . "/wifidog/auth?token=" . $token
     $token = make_token();
-    $_SESSION['gw_address'] = $gw_address;
-    $_SESSION['gw_port'] = $gw_port;
     Flight::redirect('http://' . $_SESSION['gw_address'] . ':'
         . $_SESSION['gw_port'] . '/wifidog/auth?token=' . $token);
 }
