@@ -94,6 +94,7 @@ function handle_fb_callback() {
 function handle_checkin() {
     render_boilerplate();
     $token = $_SESSION['FBTOKEN'];
+    $session = new FacebookSession($token);
     if (empty($token)) {
         Flight:error(new Exception('No FB token in session!'));
     }
@@ -196,4 +197,10 @@ function login_success() {
     $_SESSION['gw_port'] = $gw_port;
     Flight::redirect('http://' . $_SESSION['gw_address'] . ':'
         . $_SESSION['gw_port'] . '/wifidog/auth?token=' . $token);
+}
+
+function get_suggested_message() {
+    return array_rand(array(SUGGESTED_MESSAGE_1,
+        SUGGESTED_MESSAGE_2,
+        SUGGESTED_MESSAGE_3));
 }

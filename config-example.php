@@ -17,4 +17,8 @@ define('SESSION_DURATION', 'SESSION_DURATION');
 define('ACCESS_CODE', 'ACCESS_CODE');
 
 
+define('SUGGESTED_MESSAGE_1', 'Good times');
+define('SUGGESTED_MESSAGE_2', 'Enjoying some nice coffee');
+define('SUGGESTED_MESSAGE_3', 'Lovely place');
+
 ?>
