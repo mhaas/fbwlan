@@ -8,6 +8,8 @@
 define('FACEBOOK_SDK_V4_SRC_DIR', __DIR__ . '/../include/facebook-php-sdk-v4/src/Facebook/');
 require_once(__DIR__ . '/../include/facebook-php-sdk-v4/autoload.php');
 
+require_once(__DIR__ . '/../tokens.php');
+
 use Facebook\FacebookSession;
 use Facebook\FacebookRequest;
 use Facebook\FacebookRequestException;
@@ -94,17 +96,16 @@ function handle_fb_callback() {
 function handle_checkin() {
     render_boilerplate();
     $token = $_SESSION['FBTOKEN'];
-    $session = new FacebookSession($token);
     if (empty($token)) {
         Flight:error(new Exception('No FB token in session!'));
     }
+    $session = new FacebookSession($token);
     $message = Flight::request()->query->message;
 
-    $config = array(place => PLACE_ID);
+    $config = array(place => PAGE_ID);
     if (! empty($message)) {
         $config['message'] = $message;
     }
-
     $request = new FacebookRequest(
         $session,
         'POST',
