@@ -3,11 +3,13 @@
     <div class="pure-g">
         <h2><?php echo _('Facebook login successful!') ?></h2>
         <div class="pure-u-1 pure-u-md-1-3">
-        <p> <?php
-            echo _('The last step.');
-            echo _('You can add a message to your check-in.');
+            <p> <?php
+                echo _('The last step.');
+                echo ' ';
+                echo _('You can add a message to your check-in.');
+                echo ' ';
             ?>
-        </p>
+            </p>
         </div>
         <div class="pure-u-1 pure-u-md-2-3">
             <form class="pure-form">
