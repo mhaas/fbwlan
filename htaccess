@@ -1,4 +1,8 @@
 RewriteEngine On
+# RewriteBase / is required to prevent endless internal redirects
+# Note: http://stackoverflow.com/a/12106419
+RewriteBase /
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
+#RewriteCond %{REQUEST_URI} !=/index.php
 RewriteRule ^(.*)$ index.php [QSA,L]
