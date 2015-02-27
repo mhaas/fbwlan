@@ -4,7 +4,9 @@
        <div class="pure-u-1 pure-u-md-2-3">
         <p> <?php
             echo _('We offer free Wifi.');
-            echo _('We\d like to ask you to return the favor and check in to our location on Facebook.');
+            echo ' ';
+            echo _('We\'d like to ask you to return the favor and check in to our location on Facebook.');
+            echo ' ';
             echo _('So, let your friends know you\'re here and start surfing the web!');
             ?>
         </p>
@@ -17,6 +19,7 @@
         <div class="pure-u-1 pure-u-md-2-3">
             <p> <?php
                 echo _('It\'s ok if you do not want to use Facebook.');
+                echo ' ';
                 echo _('Simply ask the staff at our location for the access code and enter it below.');
                 ?>
         </p>
