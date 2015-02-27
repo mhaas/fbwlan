@@ -11,7 +11,7 @@
         <div class="pure-u-1">
             <h1><?php echo $title; ?></h1>
             <!-- .pure-img makes images responsive -->
-            <img class="pure-img" scc="<?php echo $my_url; ?>/logo.png"/>
+            <img class="pure-img" src="<?php echo $my_url; ?>static/logo.png"/>
         </div>
 
 
