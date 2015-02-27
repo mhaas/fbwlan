@@ -38,12 +38,12 @@ function check_permissions($session) {
 
     try {
         $response = $request->execute();
-        // TODO: verify permission
-        $graphObject = $response->getGraphObject();
+        $graphObject = $response->getGraphObject()->asArray();
         // http://stackoverflow.com/q/23527919
-        foreach ($graphObject as $permission) {
-            if ($permission['permission'] == 'publish_actions') {
-                return $permission['status'] == 'granted';
+        foreach ($graphObject as $key => $permissionObject) {
+            //print_r($permission);
+            if ($permissionObject->permission == 'publish_actions') {
+                return $permissionObject->status == 'granted';
             }
         }
     } catch (FacebookRequestException $ex) {
