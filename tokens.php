@@ -12,7 +12,7 @@ Flight::register('db', 'PDO', array('mysql:host='. DB_HOST . ';port=' . DB_PORT 
 
 function init_token_db() {
     $db = Flight::db();
-    $db->exec('CREATE TABLE IF NOT EXISTS tokens (id INT PRIMARY KEY, token CHAR(40) NOT NULL UNIQUE, date timestamp NOT NULL)');
+    $db->exec('CREATE TABLE IF NOT EXISTS tokens (id INT AUTO_INCREMENT PRIMARY KEY, token CHAR(40) NOT NULL UNIQUE, date timestamp NOT NULL)');
 }
 
 function generate_token() {
@@ -26,6 +26,7 @@ function make_token() {
     $stmt = $db->prepare('INSERT INTO tokens (token) VALUES (:token)');
     $stmt->bindParam(':token', $token);
     $stmt->execute();
+    return $token;
 }
 
 
