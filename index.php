@@ -29,6 +29,10 @@ session_start();
 
 require_once('include/flight/flight/Flight.php');
 
+require_once('tokens.php');
+
+init_token_db();
+
 require_once('handlers/fb_handlers.php');
 
 
