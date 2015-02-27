@@ -12,7 +12,7 @@
             </p>
         </div>
         <div class="pure-u-1 pure-u-md-2-3">
-            <form class="pure-form">
+            <form class="pure-form" action="<?php echo $post_action; ?>">
                 <fieldset>
                     <legend><?php echo _('Check In'); ?></legend>
                     <input type="textarea" placeholder="" name="message" id="text_fb_message">
@@ -21,7 +21,7 @@
                     <button class="pure-button" id="button_clear_fb_message">
                         <?php echo _('Clear message'); ?>
                     </button>
-                    <button type="submit" class="pure-button pure-button-primary" action="<?php echo $post_action; ?>">
+                    <button type="submit" class="pure-button pure-button-primary" >
                         <?php echo _('Check in to') . $place_name; ?>
                     </button>
                 </fieldset>
