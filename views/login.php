@@ -1,4 +1,3 @@
-
 <?php echo $head; ?>
     <div class="pure-g centered-row">
        <div class="pure-u-1 pure-u-md-1-2">
