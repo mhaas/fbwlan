@@ -1,0 +1,14 @@
+.l-box {
+    padding: 0.5em 2em;
+}
+
+.centered-row {
+    margin: 0 auto;
+    /* Why is max-width set in the pure pricing example? */
+    max-width: 980px;
+}
+
+.header {
+    text-align: center;
+    margin-bottom: 3em;
+}

@@ -1,7 +1,8 @@
 
 <?php echo $head; ?>
-    <div class="pure-g">
-       <div class="pure-u-1 pure-u-md-2-3">
+    <div class="pure-g centered-row">
+       <div class="pure-u-1 pure-u-md-1-2">
+        <div class="l-box">
         <p> <?php
             echo _('We offer free Wifi.');
             echo ' ';
@@ -11,29 +12,36 @@
             ?>
         </p>
         </div>
-        <div class="pure-u-1 pure-u-md-1-3">
-            <a class="pure-button pure-button-primary" href="<?php echo $fburl; ?>"><?php echo _('Connect to Facebook'); ?></a>
+        </div>
+        <div class="pure-u-1 pure-u-md-1-2">
+            <div class="l-box">
+                <a class="pure-button pure-button-primary" href="<?php echo $fburl; ?>"><?php echo _('Connect to Facebook'); ?></a>
+            </div>
         </div>
     </div>
-    <div class="pure-g">
-        <div class="pure-u-1 pure-u-md-2-3">
-            <p> <?php
-                echo _('It\'s ok if you do not want to use Facebook.');
-                echo ' ';
-                echo _('Simply ask the staff at our location for the access code and enter it below.');
-                ?>
-        </p>
+    <div class="pure-g centered-row">
+        <div class="pure-u-1 pure-u-md-1-2">
+            <div class="l-box">
+                <p> <?php
+                    echo _('It\'s ok if you do not want to use Facebook.');
+                    echo ' ';
+                    echo _('Simply ask the staff at our location for the access code and enter it below.');
+                    ?>
+                </p>
+            </div>
         </div>
-        <div class="pure-u-1 pure-u-md-1-3">
-            <form class="pure-form">
-                <fieldset>
-                    <legend><?php echo _('Access code'); ?></legend>
-                    <input type="text" placeholder="XXXXXX" name="access_code"></input>
-                    <button type="submit" class="pure-button pure-button-primary" action="<?php echo $codeurl; ?>">
-                        <?php echo _('Sign in'); ?>
-                    </button>
-                </fieldset>
-            </form>
+        <div class="pure-u-1 pure-u-md-1-2">
+            <div class="l-box">
+                <form class="pure-form">
+                    <fieldset>
+                        <legend><?php echo _('Access code'); ?></legend>
+                        <input type="text" placeholder="XXXXXX" name="access_code"></input>
+                        <button type="submit" class="pure-button pure-button-primary" action="<?php echo $codeurl; ?>">
+                            <?php echo _('Sign in'); ?>
+                        </button>
+                    </fieldset>
+                </form>
+            </div>
         </div>
     </div>
 
