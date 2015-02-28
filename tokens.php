@@ -21,6 +21,10 @@ function generate_token() {
 }
 
 function make_token() {
+    // Temporary: purge tokens more often
+    // Tokens are cleared on GW communication,
+    // but there is no gateway right now
+    clear_old_tokens();
     $db = Flight::db();
     $token = generate_token();
     $stmt = $db->prepare('INSERT INTO tokens (token) VALUES (:token)');
@@ -40,8 +44,12 @@ function clear_token($key, $value) {
 function clear_old_tokens() {
     
     $db = Flight::db();
-    $stmt = $db->prepare('DELETE FROM tokens WHERE date < DATE_SUB(NOW(), INTERVAL :duration MINUTES)');
-    $stmt->bindParam(':duration', SESSION_DURATION);
+    //$stmt = $db->prepare('DELETE FROM tokens WHERE date < DATE_SUB(NOW(), INTERVAL :duration MINUTES)');
+    // Cannot pass a constant by reference in $stmt->bindParam
+    // As there is no security problem, simply concatenate SESSION_DURATION into string
+    // http://stackoverflow.com/questions/6130077
+    //$stmt->bindParam(':duration', SESSION_DURATION);
+    $stmt = $db->prepare('DELETE FROM tokens WHERE date < DATE_SUB(NOW(), INTERVAL ' . SESSION_DURATION . ' MINUTES)');
     $stmt->execute();
     // http://stackoverflow.com/a/13009906
 }
