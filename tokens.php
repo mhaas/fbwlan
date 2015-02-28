@@ -49,7 +49,7 @@ function clear_old_tokens() {
     // As there is no security problem, simply concatenate SESSION_DURATION into string
     // http://stackoverflow.com/questions/6130077
     //$stmt->bindParam(':duration', SESSION_DURATION);
-    $stmt = $db->prepare('DELETE FROM tokens WHERE date < DATE_SUB(NOW(), INTERVAL ' . SESSION_DURATION . ' MINUTES)');
+    $stmt = $db->prepare('DELETE FROM tokens WHERE date < DATE_SUB(NOW(), INTERVAL ' . SESSION_DURATION . ' MINUTE)');
     $stmt->execute();
     // http://stackoverflow.com/a/13009906
 }
