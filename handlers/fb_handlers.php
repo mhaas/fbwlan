@@ -19,6 +19,9 @@ FacebookSession::setDefaultApplication(APP_ID,
      APP_SECRET);
 
 
+Flight::set('retry_url', MY_URL .'login');
+
+
 function render_boilerplate() {
     Flight::render('head',
         array(
@@ -204,7 +207,6 @@ function handle_login() {
     if (!is_session_valid()) {
         Flight::error(new Exception('Gateway parameters not set in login handler!'));
     }
-    Flight::set('retry_url', MY_URL .'login');
     render_boilerplate();
     fblogin();
 }
