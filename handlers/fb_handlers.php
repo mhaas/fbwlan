@@ -167,6 +167,30 @@ function handle_access_code() {
     }
 }
 
+function is_session_valid() {
+    if (!(empty($_SESSION['gw_address']) || empty($_SESSION['gw_port']) || empty($_SESSION['gw_id']))) {
+        return true;
+        // reg_url is not that important and might be empty?
+        //Flight::error(new Exception('Gateway parameters not set in login handler!'));
+    }
+    return false;
+
+}
+
+function update_session($request) {
+    $gw_address = $request->query->gw_address;
+    $gw_port = $request->query->gw_port;
+    $gw_id = $request->query->gw_id;
+    if (!(empty($gw_address) || empty($gw_port) || empty($gw_id))) {
+        $_SESSION['gw_address'] = $gw_address;
+        $_SESSION['gw_port'] = $gw_port;
+        $_SESSION['gw_id'] = $gw_id;
+    }
+    $req_url = $request->query->url;
+    if (! empty($req_url)) {
+        $_SESSION['req_url'] = $req_url;
+    }
+}
 
 // User request
 function handle_login() {
@@ -174,16 +198,10 @@ function handle_login() {
     //login/?gw_address=%s&gw_port=%d&gw_id=%s&url=%s
     // If we get called without the gateway parameters, then we better
     // have these in the session already.
-    $gw_address = $request->query->gw_address;
-    $gw_port = $request->query->gw_port;
-    $gw_id = $request->query->gw_id;
-    $req_url = $request->query->url;
-    $_SESSION['gw_address'] = $gw_address;
-    $_SESSION['gw_port'] = $gw_port;
-    $_SESSION['gw_id'] = $gw_id;
-    $_SESSION['req_url'] = $req_url;
-    if (empty($_SESSION['gw_address']) || empty($_SESSION['gw_port']) || empty($_SESSION['gw_id'])) {
-        // reg_url is not that important and might be empty?
+    // Initialize or update session parameters
+    update_session($request);
+    // If we have no session parameters now, we never had them
+    if (!is_session_valid()) {
         Flight::error(new Exception('Gateway parameters not set in login handler!'));
     }
     Flight::set('retry_url', MY_URL .'login');
