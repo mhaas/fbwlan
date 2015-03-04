@@ -11,7 +11,8 @@ define('AUTH_ERROR', '-1');
 
 
 function handle_ping(){
-    return 'Pong';
+    /*return 'Pong';*/
+    echo 'Pong\n';
 }
 
 
@@ -32,11 +33,13 @@ function handle_auth() {
     // Do some housekeeping
     clear_old_tokens();
 
-    if ($stage == STAGE_COUNTER) {
-        return;
-    }
+    // Even on STAGE_COUNTER, check token
+    //if ($stage == STAGE_COUNTER) {
+    //    return;
+    //}
     if (is_token_valid($token)) {
         write_auth_response(AUTH_ALLOWED);
+        return;
     }
     write_auth_response(AUTH_DENIED);
 
@@ -45,7 +48,7 @@ function handle_auth() {
 
 
 function write_auth_response($code) {
-    echo 'Auth: ' . $code . '\n';
+    echo 'Auth: ' . $code;
 }
 
 
