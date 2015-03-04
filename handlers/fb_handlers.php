@@ -83,7 +83,6 @@ function handle_fb_callback() {
         if (check_permissions($session)) {
             Flight::render('fb_callback', array(
                 'post_action' => MY_URL .'checkin',
-                'suggested_message' => get_suggested_message(),
                 'place_name' => PAGE_NAME,
                 'retry_url' => Flight::get('retry_url')));
         } else {
@@ -226,12 +225,6 @@ function login_success() {
     $token = make_token();
     Flight::redirect('http://' . $_SESSION['gw_address'] . ':'
         . $_SESSION['gw_port'] . '/wifidog/auth?token=' . $token);
-}
-
-function get_suggested_message() {
-    return array_rand(array(SUGGESTED_MESSAGE_1,
-        SUGGESTED_MESSAGE_2,
-        SUGGESTED_MESSAGE_3));
 }
 
 
