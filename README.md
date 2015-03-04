@@ -166,6 +166,10 @@ if the script is installed on http://example.xyz/fbwlan/:
 
 Make sure to set the correct hostname and path!
 
+**TODO:**
+ * the portal page is currently not implemented
+ * script assumes HTTPS
+
 ## Allowing Access to Facebook ##
 
 As described above, Facebook uses many different IP addresses. Due to the way
@@ -221,10 +225,14 @@ Start wifidog and reload the firewall:
     /etc/init.d/wifidog start
     /etc/init.d/wifidog-fw-extra
 
+**TODO:** Automatic start of wifidog currently does not work. It is probably started
+before the interfaces are up. Likely, wifidog (and the FW extra) need to be started
+on IF UP.
+
 Once you've made sure everything works, you can make wifidog start on boot:
 
     /etc/init.d/wifidog enable
-    /etc/init.d/wifidog-fw-extra 
+    /etc/init.d/wifidog-fw-extra enable
 
 That's it!
 
