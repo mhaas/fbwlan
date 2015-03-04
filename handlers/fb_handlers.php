@@ -99,7 +99,7 @@ function handle_fb_callback() {
     else {
         //Flight::error(new Exception('Did not get session?!'));
         Flight::render('denied', array(
-            'msg' => _('I could not get a Facebook session. Talk to the administrator about this.'),
+            'msg' => _('It looks like you cancelled the login!'),
             'retry_url' => Flight::get('retry_url'),
         ));
     }
