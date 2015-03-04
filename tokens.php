@@ -58,7 +58,8 @@ function is_token_valid($token) {
     $db = Flight::db();
     $stmt = $db->prepare('SELECT token FROM tokens WHERE token = :token');
     $stmt->bindParam(':token', $token);
-    $data = $stmt->execute();
+    $stmt->execute();
+    $data = $stmt->fetch(PDO::FETCH_ASSOC);
     if (empty($data)) {
         return false;
     }
