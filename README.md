@@ -13,7 +13,7 @@ on Facebook, they get free wifi in exchange.
 * Uses the [Flight framework](http://flightphp.com/)
 * Based on [Pure.css](http://purecss.io/)
 * Compatible with Wifidog (and possibly CoovaChilli via
-  [*chilli_proxy*](http://coova.org/CoovaChilli/Proxy)
+  [*chilli_proxy*](http://coova.org/CoovaChilli/Proxy))
 
 ## Why another auth server? ##
 
