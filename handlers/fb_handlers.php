@@ -26,10 +26,15 @@ function render_boilerplate() {
     Flight::render('head',
         array(
             'my_url' => MY_URL,
-            'title' => _('Log in at ') . PAGE_NAME,
+            'title' => _('WIFI at ') . PAGE_NAME,
         ),
         'head');
-    Flight::render('foot', array(), 'foot');
+    Flight::render('foot',
+        array(
+            'privacy_url' => MY_URL . 'privacy/',
+            'imprint_url' => IMPRINT_URL,
+        ),
+        'foot');
 }
 
 
