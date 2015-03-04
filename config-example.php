@@ -16,9 +16,14 @@ define('MY_URL', 'MY_URL');
 define('SESSION_DURATION', 'SESSION_DURATION');
 define('ACCESS_CODE', 'ACCESS_CODE');
 
+
 // How long the session cookie is valid.
 // In seconds
 define('COOKIE_SESSION_DURATION', 3600);
+
+// Don't forget to whitelist this domain on the gateway!
+define('EXTENDED_PRIVACY_URL', 'http://example.xyz/privacy/');
+define('IMPRINT_URL', 'http://example.xyz/imprint/');
 
 define('SUGGESTED_MESSAGE_1', 'Good times');
 define('SUGGESTED_MESSAGE_2', 'Enjoying some nice coffee');

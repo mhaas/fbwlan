@@ -235,6 +235,8 @@ function handle_privacy() {
     Flight::render('privacy', array(
         'session_duration' => SESSION_DURATION,
         'cookie_session_duration' => COOKIE_SESSION_DURATION / 60,
+        'extended_privacy_url' => EXTENDED_PRIVACY_URL,
+        'imprint_url' => IMPRINT_URL,
     ));
 
 }
