@@ -12,8 +12,8 @@ on Facebook, they get free wifi in exchange.
 * Lightweight: does one thing only
 * Uses the [Flight framework](http://flightphp.com/)
 * Based on [Pure.css](http://purecss.io/)
-* Compatible with Wifidog (and possibly CoovaChilli via
-  [*chilli_proxy*](http://coova.org/CoovaChilli/Proxy))
+* Compatible with [Wifidog (Protocol V1)](http://dev.wifidog.org/wiki/doc/developer/WiFiDogProtocol_V1)
+  - Possibly CoovaChilli via [*chilli_proxy*](http://coova.org/CoovaChilli/Proxy))
 
 ## Why another auth server? ##
 
