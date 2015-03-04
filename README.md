@@ -121,6 +121,10 @@ login details:
     SITE="sftp://my-ftp-host/dir/"
     EOF
 
+Run the upload script:
+
+    bash upload.sh
+
 If you do not have lftp, simply upload the files manually with your FTP
 client of choice. See *upload.lftp* for details. In particular, make sure
 to rename *htaccess* to *.htaccess*.
