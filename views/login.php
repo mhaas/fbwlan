@@ -34,7 +34,7 @@
                 <form class="pure-form pure-form-stacked" action="<?php echo $codeurl; ?>">
                     <fieldset>
                         <legend><?php echo _('Access code'); ?></legend>
-                        <input type="text" placeholder="XXXXXX" name="access_code"></input>
+                        <input type="text" placeholder="XXXXXX" name="access_code">
                         <button type="submit" class="pure-button pure-button-primary">
                             <?php echo _('Sign in'); ?>
                         </button>
