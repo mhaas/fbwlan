@@ -9,11 +9,12 @@
                             echo '<a class="pure-menu-link" href="' . $privacy_url .  '">' . _('Privacy') . '</a>';
                         ?>
                         </li>
-                         <li class="pure-menu-item">
-                        <?php
+                        <?php if (! empty($imprint_url)) {
+                            echo '<li class="pure-menu-item">';
                             echo '<a class="pure-menu-link" href="' . $imprint_url . '">' . _('Imprint') . '</a>';
+                            echo '</li>';
+                        }
                         ?>
-                        </li>
                     </ul>
                 </div>
             </div>
