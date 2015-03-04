@@ -64,6 +64,17 @@ function check_permissions($session) {
     return false;
 }
 
+
+function handle_root() {
+    render_boilerplate();
+    Flight::render('root',
+        array(
+            'page_name' => PAGE_NAME,
+            'page_url' => 'https://facebook.com/' . PAGE_ID,
+    ));
+
+}
+
 // In the FB callback, we show a form to the user
 // or an error message if something went wrong.
 function handle_fb_callback() {
