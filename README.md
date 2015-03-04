@@ -22,22 +22,22 @@ Some scripts which claim to use Facebook for hotspot authentication
 are available in the wild. For [Authpuppy](http://www.authpuppy.org/),
 there is a [third-party plugin for Facebook authentication](https://code.launchpad.net/~alliancecsf-dev/authpuppy/apAuthFacebookPlugin).
 Authpuppy itself is quite unmaintained and uses the outdated Symfony 1.x
-framework. Additionally, I would have to add the check-in functionality.
+framework. Additionally, there is no check-in functionality out of the box.
 
 There's also the [Wifidog auth server](https://github.com/wifidog/wifidog-auth)
 which requires PostgreSQL. I don't have a web host capable of PostgreSQL, so
-that was not acceptable either. Of course, the Wifidog auth server also does
+that was not acceptable either. The Wifidog auth server also does
 not support Facebook.
 
 There are more attempts at integrating Facebook login into a open-source
 hotspot. [Kikiauth](https://github.com/hongquan/KikiAuth) is promising, yet
-abandoned by its author. Facebook uses a multitude of IP addresses for the
-same host names which makes it hard to whitelist all ressources necessary
-for login. I solve this problem with the ipset feature of [Dnsmasq](http://www.thekelleys.org.uk/dnsmasq/docs/dnsmasq-man.html)
-as helpfully suggested by [jow on the OpenWRT forums](https://forum.openwrt.org/viewtopic.php?pid=235631#p235631).
+abandoned by its author. The problem here is themultitude of IP addresses
+used by Facebook which makes it hard to whitelist all ressources necessary.
+I solve this problem with the ipset feature of [Dnsmasq](http://www.thekelleys.org.uk/dnsmasq/docs/dnsmasq-man.html)
+based on a recommendation by [jow on the OpenWRT forums](https://forum.openwrt.org/viewtopic.php?pid=235631#p235631).
 
 The [socialwifi project by mengning](https://github.com/mengning/socialwifi)
-requires tomcat and other java stuff which I did not have handy.
+requires tomcat and other java stuff.
 
 [social-hotspot](https://github.com/acanthus2000/social-hotspot) comes quite
 close to my requirements. It connects to Facebook and either asks the user
@@ -45,7 +45,7 @@ to like a page or to check in. On the gateway, NoCatSplash captures the user.
 The problem here is that the Facebook app provides no real security: the user
 can always log in by [POST-ing the correct form](https://github.com/acanthus2000/social-hotspot/blob/master/index.php#L37)
 to NoCatSplash. Although this is unlikely to pose a real problem as there
-are unlikely to be any security implications, I plainly didn't like this way
+are unlikely to be any security implications, I didn't like this way
 of handling authentication client-side.
 
 In my implementation, the gateway (Wifidog) verifies that the
@@ -54,7 +54,7 @@ Facebook app (this script) actually granted access to the user.
 Several commercial implementations are also available. Facebook themselves
 offer [Facebook Wifi](https://www.facebook.com/help/126760650808045/). The
 offer looks good on paper, with affordable devices like the D-Link DIR-865L
-and the Netgear R6300 (v2) being available. Some research reveals that
+and the Netgear R6300 (v2). Some research reveals that
 the Facebook Wifi implementation
 [always enables HTTPS](http://forum1.netgear.com/showpost.php?p=493554&postcount=12).
 This means that many smartphone apps will always work and the user might not
