@@ -182,7 +182,7 @@ support ipset. Install dnsmasq-full instead
 
 On boot, we need to create the ipset where we store the IP addresses.
 This must happen before dnsmasq can populate them. A simple way
-to handle this is to edit */etc/init.d/dnsmasq* and add the following
+to handle this is to edit */etc/firewall.user* and add the following
 line to the end:
     
     ipset create fb hash:ip
@@ -192,20 +192,39 @@ Facebook in the **fb** ipset. Add this to end of the file:
 
     ipset=/facebook.com/fbcdn.net/akamaihd.net/fb
 
-Finally, allow the **fb** ipset in the firewall. Edit */etc/firewall.user* and
-add this:
+Finally, allow the **fb** ipset in the firewall. This has to happen
+after Wifidog has set up its rules so you can't put it into
+*/etc/firewall.user*. 
 
-    iptables -A WiFiDog_br-lan_AuthServers -m set --match-set fb dst -j ACCEPT
+    cat <<EOF > /etc/init.d/wifidog-fw-extra
+    #!/bin/sh /etc/rc.common
+    START=70
+
+    start() {
+        # Sleep a bit so Wifidog has time to do its own iptables calls
+        # TODO: poll iptables for existence of the chain and time out 
+        sleep 10
+        iptables -A WiFiDog_br-lan_AuthServers -m set --match-set fb dst -j ACCEPT  
+    }
+
+    stop() {
+            iptables -D WiFiDog_br-lan_AuthServers -m set --match-set fb dst -j ACCEPT
+    }
+    EOF
+    chmod +x /etc/init.d/wifidog-fw-extra
+
 
 Start wifidog and reload the firewall:
 
+    fw3 reload
     /etc/init.d/dnsmasq restart
     /etc/init.d/wifidog start
-    fw3 reload
+    /etc/init.d/wifidog-fw-extra
 
 Once you've made sure everything works, you can make wifidog start on boot:
 
-    /etc/init.d/wifidog restart
+    /etc/init.d/wifidog enable
+    /etc/init.d/wifidog-fw-extra 
 
 That's it!
 
