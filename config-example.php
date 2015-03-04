@@ -16,6 +16,9 @@ define('MY_URL', 'MY_URL');
 define('SESSION_DURATION', 'SESSION_DURATION');
 define('ACCESS_CODE', 'ACCESS_CODE');
 
+// How long the session cookie is valid.
+// In seconds
+define('COOKIE_SESSION_DURATION', 3600);
 
 define('SUGGESTED_MESSAGE_1', 'Good times');
 define('SUGGESTED_MESSAGE_2', 'Enjoying some nice coffee');

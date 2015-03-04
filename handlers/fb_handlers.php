@@ -231,7 +231,10 @@ function get_suggested_message() {
 
 
 function handle_privacy() {
-
-    Flight::render('privacy', array('session_duration' => SESSION_DURATION));
+    render_boilerplate();
+    Flight::render('privacy', array(
+        'session_duration' => SESSION_DURATION,
+        'cookie_session_duration' => COOKIE_SESSION_DURATION / 60,
+    ));
 
 }

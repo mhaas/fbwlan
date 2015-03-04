@@ -25,6 +25,9 @@ require_once('config.php');
 ini_set('session.cookie_path', parse_url(MY_URL, PHP_URL_PATH));
 // TODO: does this work across a proxy?
 
+// Sessions valid for one hour
+session_set_cookie_params(COOKIE_SESSION_DURATION);
+
 session_start();
 
 require_once('include/flight/flight/Flight.php');
@@ -41,6 +44,7 @@ Flight::route('/login', 'handle_login');
 Flight::route('/fb_callback', 'handle_fb_callback');
 Flight::route('/checkin', 'handle_checkin');
 Flight::route('/access_code', 'handle_access_code');
+Flight::route('/privacy', 'handle_privacy');
 
 require_once('handlers/gw_handlers.php');
 
