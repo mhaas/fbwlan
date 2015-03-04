@@ -92,7 +92,11 @@ function handle_fb_callback() {
         }
     }
     else {
-        Flight::error(new Exception('Should never get here.'));
+        //Flight::error(new Exception('Did not get session?!'));
+        Flight::render('denied', array(
+            'msg' => _('I could not get a Facebook session. Talk to the administrator about this.'),
+            'retry_url' => Flight::get('retry_url'),
+        ));
     }
 }
 
@@ -223,4 +227,11 @@ function get_suggested_message() {
     return array_rand(array(SUGGESTED_MESSAGE_1,
         SUGGESTED_MESSAGE_2,
         SUGGESTED_MESSAGE_3));
+}
+
+
+function handle_privacy() {
+
+    Flight::render('privacy', array('session_duration' => SESSION_DURATION));
+
 }
