@@ -22,7 +22,7 @@
                 <form class="pure-form" action="<?php echo $post_action; ?>">
                     <fieldset>
                         <legend><?php echo _('Check In'); ?></legend>
-                        <input type="textarea" placeholder="" name="message" id="text_fb_message" value="<?php echo $suggested_message; ?>">
+                        <textarea rows="2" name="message" id="text_fb_message" placeholder="<?php echo _('A message, if desired');?>"></textarea>
                         <button class="pure-button" id="button_clear_fb_message">
                             <?php echo _('Clear message'); ?>
                         </button>
