@@ -4,3 +4,6 @@
 [submodule "include/facebook-php-sdk-v4"]
 	path = include/facebook-php-sdk-v4
 	url = https://github.com/facebook/facebook-php-sdk-v4.git
+[submodule "static/fontawesome"]
+	path = static/fontawesome
+	url = https://github.com/FortAwesome/Font-Awesome.git
