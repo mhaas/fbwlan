@@ -11,11 +11,14 @@ ini_set('session.use_only_cookies', '1');
 ini_set('session.use_trans_sid', '0');
 // This does have a default value listed?
 ini_set('session.cookie_httponly', '1');
-// HTTPS only!
-ini_set('session.cookie_secure', '1');
 
 // Load constants defined in config
 require_once('config.php');
+
+// HTTPS only!
+if (parse_url(MY_URL, PHP_URL_SCHEME) === "https") {
+    ini_set('session.cookie_secure', '1');
+}
 
 // A special bit of configuration for our host:
 // An SSL proxy is provided at https://sslsites.de/your.domain/
@@ -23,7 +26,6 @@ require_once('config.php');
 // other websites available over that proxy can read the cookies!
 
 ini_set('session.cookie_path', parse_url(MY_URL, PHP_URL_PATH));
-// TODO: does this work across a proxy?
 
 // Sessions valid for one hour
 session_set_cookie_params(COOKIE_SESSION_DURATION);

@@ -166,9 +166,6 @@ if the script is installed on http://example.xyz/fbwlan/:
 
 Make sure to set the correct hostname and path!
 
-**TODO:**
- * script assumes HTTPS
-
 ## Allowing Access to Facebook ##
 
 As described above, Facebook uses many different IP addresses. Due to the way
