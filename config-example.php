@@ -60,4 +60,7 @@ define('IMPRINT_URL', 'http://example.xyz/imprint/');
 // In seconds
 define('COOKIE_SESSION_DURATION', 3600);
 
+// Where user is sent after login is done
+define('PORTAL_URL', 'http://example.xzy/portal/');
+
 ?>

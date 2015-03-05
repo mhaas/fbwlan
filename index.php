@@ -51,6 +51,13 @@ require_once('handlers/gw_handlers.php');
 Flight::route('/ping', 'handle_ping');
 Flight::route('/auth', 'handle_auth');
 
+// Once login is done, the gateway redirects
+// the user to MY_URL . 'portal'
+// We don't serve this here, so use external page
+
+Flight::route('/portal', function() { Flight::redirect(PORTAL_URL); });
+
+
 Flight::start();
 
 

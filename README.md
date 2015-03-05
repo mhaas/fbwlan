@@ -167,7 +167,6 @@ if the script is installed on http://example.xyz/fbwlan/:
 Make sure to set the correct hostname and path!
 
 **TODO:**
- * the portal page is currently not implemented
  * script assumes HTTPS
 
 ## Allowing Access to Facebook ##
