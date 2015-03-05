@@ -46,8 +46,8 @@
                 <p>
                     <a href="<?php echo $retry_url; ?>" class="pure-button pure-button-primary">
                         <i class="fa fa-rotate-left fa-lg"></i>
-                        <?php echo _('Back to login'); ?><
-                    /a>
+                        <?php echo _('Back to login'); ?>
+                    </a>
                 </p>
             </div>
         </div>
