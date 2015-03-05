@@ -44,7 +44,10 @@
         <div class="pure-u-1 pure-u-md-1-2">
             <div class="l-box">
                 <p>
-                    <a href="<?php echo $retry_url; ?>" class="pure-button pure-button-primary"><?php echo _('Back to login'); ?></a>
+                    <a href="<?php echo $retry_url; ?>" class="pure-button pure-button-primary">
+                        <i class="fa fa-rotate-left fa-lg"></i>
+                        <?php echo _('Back to login'); ?><
+                    /a>
                 </p>
             </div>
         </div>
