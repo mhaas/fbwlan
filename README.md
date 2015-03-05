@@ -205,35 +205,107 @@ after Wifidog has set up its rules so you can't put it into
 
     start() {
         # Sleep a bit so Wifidog has time to do its own iptables calls
-        # TODO: poll iptables for existence of the chain and time out 
         sleep 10
-        iptables -A WiFiDog_br-lan_AuthServers -m set --match-set fb dst -j ACCEPT  
+        # We may get called multiple times, so make sure the rule is only set once
+        if  ! iptables -C WiFiDog_br-lan_AuthServers -m set --match-set fb dst -j ACCEPT 2>/dev/null; then
+                logger -t wifidog "Enabling extra firewall rules"
+            iptables -A WiFiDog_br-lan_AuthServers -m set --match-set fb dst -j ACCEPT
+        else
+            logger -t wifidog "Extra firewall rules already enabled. Bye."
+        fi
+
     }
 
     stop() {
-            iptables -D WiFiDog_br-lan_AuthServers -m set --match-set fb dst -j ACCEPT
+        if iptables -C WiFiDog_br-lan_AuthServers -m set --match-set fb dst -j ACCEPT 2>/dev/null; then
+                logger -t wifidog "Disabling extra firewall rules"
+                iptables -D WiFiDog_br-lan_AuthServers -m set --match-set fb dst -j ACCEPT
+        else
+                logger -t wifidog "Extra firewall rules already disabled. Bye."
+        fi
     }
+
     EOF
     chmod +x /etc/init.d/wifidog-fw-extra
 
-
+### Testing the setup ###
 Start wifidog and reload the firewall:
 
     fw3 reload
     /etc/init.d/dnsmasq restart
     /etc/init.d/wifidog start
+    sleep 10
     /etc/init.d/wifidog-fw-extra
 
-**TODO:** Automatic start of wifidog currently does not work. It is probably started
-before the interfaces are up. Likely, wifidog (and the FW extra) need to be started
-on IF UP.
+Open any non-HTTPS website in your browser and you should be redirected to
+the captive portal.
 
-Once you've made sure everything works, you can make wifidog start on boot:
+### Starting Wifidog automatically & reliably ###
+
+In my testing on Barrier Breaker, the default wifidog init script failed
+to bring up Wifidog. Apparently, Wifidog starts before the interfaces are up
+and quits. However, we can (re-)start wifidog automatically on Wifi changes.
+I took the opportunity to rewrite the Wifidog init script to use the new
+[procd](http://wiki.openwrt.org/inbox/procd-init-scripts) init system.
+The distinct advantage here is the process supervision:
+if Wifidog crashes, it is automatically restarted. I originally hoped
+to reload Wifidog automatically on interface changes via the **netdev**
+param, but that didn't work.
+
+    cat <<EOF > /etc/init.d/wifidog
+    #!/bin/sh /etc/rc.common
+    # Copyright (C) 2006 OpenWrt.org
+    START=65
+
+    USE_PROCD=1
+
+    EXTRA_COMMANDS="status"
+    EXTRA_HELP="        status Print the status of the service"
+
+    start_service() {
+        procd_open_instance
+        # -s: log to syslog
+        # -f: run in foreground
+        procd_set_param command /usr/bin/wifidog -s -f
+        procd_set_param respawn # respawn automatically if something died
+        procd_set_param file /etc/wifidog.conf
+        procd_close_instance
+        # wait for firewall rules to be setup
+        /etc/init.d/wifidog-fw-extra enabled && /etc/init.d/wifidog-fw-extra restart &
+
+    }
+    # TODO: wdctl supports reload without disconnecting users
+    EOF
+    chmod +x /etc/init.d/wifidog
+
+Note that the script backgrounds the call to  *wifidog-fw-extra*. Otherwise, the firewall
+will be set up before Wifidog which will then promptly discard the rules.
+
+To ensure that Wifidog is restarted on interface changes, we create the
+following hotplug script:
+
+    cat <<EOF >/etc/hotplug.d/iface/30-wifidog
+    #!/bin/sh
+    # Based on firewall.hotplug
+    [ "$ACTION" = ifup -o "$ACTION" = ifupdate ] || exit 0
+    [ "$ACTION" = ifupdate -a -z "$IFUPDATE_ADDRESSES" -a -z "$IFUPDATE_DATA" ] && exit 0
+
+    /etc/init.d/wifidog enabled || exit 0
+    logger -t wifidog "Reloading wifidog due to $ACTION of $INTERFACE ($DEVICE)"
+    /etc/init.d/wifidog restart
+    EOF
+    chmod +x /etc/hotplug.d/iface/30-wifidog
+
+Note that you can see the logger output with the  *logread* command.
+
+Now enable the init scripts to make Wifidog start on boot:
 
     /etc/init.d/wifidog enable
     /etc/init.d/wifidog-fw-extra enable
 
-That's it!
+The downside to this method is that Wifidog is restarted multiple times. In
+addition, the firewall is called repeatedly and slows down the boot process
+due to the *sleep 10* call. The upside is that it works.
 
 
 
