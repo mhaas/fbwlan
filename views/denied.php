@@ -18,7 +18,9 @@
         <div class="pure-u-1 pure-u-md-1-3">
             <div class="l-box">
                 <p>
-                    <a class="pure-button pure-button-primary" href="<?php echo $retry_url; ?>"><?php echo _('Try again'); ?></a>
+                    <a class="pure-button pure-button-primary" href="<?php echo $retry_url; ?>">
+                    <i class="fa fa-rotate-left fa-lg"></i>
+                    <?php echo _('Try again'); ?></a>
                 </p>
             </div>
         </div>

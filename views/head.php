@@ -3,6 +3,7 @@
     <head>
         <link rel="stylesheet" href="<?php echo $my_url; ?>/static/pure-min.css">
         <link rel="stylesheet" href="<?php echo $my_url; ?>/static/grids-responsive-min.css">
+        <link rel="stylesheet" href="<?php echo $my_url; ?>/static/fontawesome/css/font-awesome.min.css">
         <link rel="stylesheet" href="<?php echo $my_url; ?>/static/my.css">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title><?php echo $title; ?></title>

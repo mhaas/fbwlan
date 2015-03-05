@@ -26,6 +26,7 @@
                             <label for="text_fb_message"><?php echo _('Message'); ?></label>
                             <textarea rows="2" name="message" id="text_fb_message" placeholder="<?php echo _('Optional');?>"></textarea>
                             <button type="submit" class="pure-button pure-button-primary">
+                                <i class="fa fa-facebook-official fa-lg"></i>
                                 <?php echo _('Check in to') . ' ' .$place_name; ?>
                             </button>
                         </fieldset>

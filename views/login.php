@@ -15,7 +15,9 @@
         <div class="pure-u-1 pure-u-md-1-2">
             <div class="l-box">
                 <p>
-                    <a class="pure-button pure-button-primary" href="<?php echo $fburl; ?>"><?php echo _('Connect to Facebook'); ?></a>
+                    <a class="pure-button pure-button-primary" href="<?php echo $fburl; ?>">
+                        <i class="fa fa-facebook-official fa-lg"></i>
+                        <?php echo _('Connect to Facebook'); ?></a>
                 </p>
             </div>
         </div>
@@ -39,6 +41,7 @@
                             <legend><?php echo _('Access code'); ?></legend>
                             <input type="text" placeholder="XXXXXX" name="access_code">
                             <button type="submit" class="pure-button pure-button-primary">
+                                <i class="fa fa-sign-in fa-lg"></i>
                                 <?php echo _('Sign in'); ?>
                             </button>
                         </fieldset>

@@ -6,5 +6,6 @@ put htaccess -o .htaccess
 mirror -R views
 mirror -R handlers
 mirror -R include
-mirror -R static
-
+mirror -R --exclude-glob=fontawesome/ static
+mkdir -p -f static/fontawesome/css/
+put -O static/fontawesome/css static/fontawesome/css/font-awesome.min.css
