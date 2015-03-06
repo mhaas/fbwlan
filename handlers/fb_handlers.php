@@ -40,6 +40,11 @@ function render_boilerplate() {
             'retry_url' => Flight::get('retry_url'),
         ),
         'back_to_code_widget');
+    Flight::render('access_code_widget',
+        array(
+            'codeurl' => MY_URL . 'access_code/',
+        ),
+        'access_code_widget');
 }
 
 
@@ -119,8 +124,8 @@ function handle_fb_callback() {
                 ));
         } else {
             if (ARRAY_KEY_EXISTS('FB_REREQUEST', $_SESSION) && $_SESSION['FB_REREQUEST']) {
-                Flight::render('denied', array(
-                    'msg' => _('The ability to post to Facebook on your behalf is required.'),
+                Flight::render('denied_fb', array(
+                    'msg' => _('You didn\'t grant us permission to post on Facebook. That\'s ok!'),
                 ));
             } else {
                 $_SESSION['FB_REREQUEST'] = True;
@@ -129,9 +134,8 @@ function handle_fb_callback() {
         }
     }
     else {
-        //Flight::error(new Exception('Did not get session?!'));
-        Flight::render('denied', array(
-            'msg' => _('It looks like you cancelled the login!'),
+        Flight::render('denied_fb', array(
+            'msg' => _('It looks like you didn\'t login! That\'s ok!'),
         ));
     }
 }
@@ -195,15 +199,12 @@ function handle_access_code() {
     $request = Flight::request();
     $code = $request->query->access_code;
     if (empty($code)) {
-        Flight::render('denied', array(
+        Flight::render('denied_code', array(
             'msg' => _('No access code sent.'),
-            'retry_url' => Flight::get('retry_url'),
         ));
-    }
-    if ($code != ACCESS_CODE) {
-        Flight::render('denied', array(
+    } else if ($code != ACCESS_CODE) {
+        Flight::render('denied_code', array(
             'msg' => _('Wrong access code.'),
-            'retry_url' => Flight::get('retry_url'),
         ));
     } else {
         login_success();
