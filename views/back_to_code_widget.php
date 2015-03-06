@@ -2,6 +2,7 @@
         <div class="pure-u-1 pure-u-md-1-2">
             <div class="l-box">
                 <p> <?php echo _('If you do not want to check in, you can still use the access code!') ; ?> <p>
+                <p> <?php echo _('Just ask our staff about the Wi-Fi.') ; ?> <p>
             </div>
         </div>
         <div class="pure-u-1 pure-u-md-1-2">
