@@ -28,7 +28,10 @@
                     ?>
                 </p>
                 <p>
-                    <a class="pure-button pure-button-primary" href="<?php echo $page_url; ?>"><?php echo 'Demo: Connect to ' .  $page_name . _(' on Facebook'); ?></a>
+                    <a class="pure-button pure-button-primary" href="<?php echo $page_url; ?>">
+                        <i class="fa fa-play lg"></i>
+                        <?php echo 'Demo: Connect to ' .  $page_name . _(' on Facebook'); ?>
+                    </a>
                 </p>
             </div>
         </div>
