@@ -182,6 +182,11 @@ function fblogin() {
     // Simplification: always assume we are not logged in!
     $helper = new FacebookRedirectLoginHelper(MY_URL . 'fb_callback/');
     // We do want to publish to the user's wall!
+    // Note: Facebook docs state that login and write permission request
+    // should be two separate requests.
+    // The code is already set up to handle this separately, but I believe
+    // the combined flow provides better UX.
+    // https://developers.facebook.com/docs/facebook-login/permissions/v2.2
     $scope = array('publish_actions');
     $fb_login_url = $helper->getLoginUrl($scope);
     $code_login_url = MY_URL . 'access_code/';
