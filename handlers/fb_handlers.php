@@ -35,6 +35,11 @@ function render_boilerplate() {
             'imprint_url' => IMPRINT_URL,
         ),
         'foot');
+    Flight::render('back_to_code_widget',
+        array(
+            'retry_url' => Flight::get('retry_url'),
+        ),
+        'back_to_code_widget');
 }
 
 
@@ -76,6 +81,21 @@ function handle_root() {
 
 }
 
+// if the user does not grant publish_actions,
+// we go here and ask again
+function handle_rerequest_permission() {
+    render_boilerplate();
+    // Simplification: always assume we are not logged in!
+    $helper = new FacebookRedirectLoginHelper(MY_URL . 'fb_callback/');
+    // We do want to publish to the user's wall!
+    $scope = array('publish_actions');
+    $fb_login_url = $helper->getReRequestUrl($scope);
+    Flight::render('rerequest_permission', array(
+        'fburl' => $fb_login_url,
+        ));
+
+}
+
 // In the FB callback, we show a form to the user
 // or an error message if something went wrong.
 function handle_fb_callback() {
@@ -96,22 +116,22 @@ function handle_fb_callback() {
             Flight::render('fb_callback', array(
                 'post_action' => MY_URL .'checkin',
                 'place_name' => PAGE_NAME,
-                'retry_url' => Flight::get('retry_url')));
+                ));
         } else {
-            // 
-            Flight::render('denied', array(
-                'msg' => _('The ability to post to Facebook on your behalf is required.'),
-                'retry_url' => Flight::get('retry_url'),
-            ));
-            // TODO: handle_login must be changed to handle requests without GET
-            // params! 
+            if (ARRAY_KEY_EXISTS('FB_REREQUEST', $_SESSION) && $_SESSION['FB_REREQUEST']) {
+                Flight::render('denied', array(
+                    'msg' => _('The ability to post to Facebook on your behalf is required.'),
+                ));
+            } else {
+                $_SESSION['FB_REREQUEST'] = True;
+                Flight::redirect(MY_URL . 'rerequest_permission');
+            }
         }
     }
     else {
         //Flight::error(new Exception('Did not get session?!'));
         Flight::render('denied', array(
             'msg' => _('It looks like you cancelled the login!'),
-            'retry_url' => Flight::get('retry_url'),
         ));
     }
 }
