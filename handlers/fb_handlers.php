@@ -144,7 +144,7 @@ function handle_checkin() {
     render_boilerplate();
     $token = $_SESSION['FBTOKEN'];
     if (empty($token)) {
-        Flight:error(new Exception('No FB token in session!'));
+        Flight::error(new Exception('No FB token in session!'));
     }
     $session = new FacebookSession($token);
     $message = Flight::request()->query->message;
