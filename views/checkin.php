@@ -49,7 +49,7 @@
                     ?>
                 </p> 
                 <p>
-                    <a href="<?php echo $posturl; ?>" class="pure-button button-secondary">
+                    <a href="<?php echo $posturl; ?>" target="_blank" class="pure-button button-secondary">
                     <i class="fa fa-lg fa-facebook-official"></i>
                     <?php
                     echo _('Open Facebook in new window.');
