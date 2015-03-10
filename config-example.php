@@ -58,7 +58,7 @@ define('IMPRINT_URL', 'http://example.xyz/imprint/');
 // How long the session cookie is valid.
 // You probably do not have to change this.
 // In seconds
-define('COOKIE_SESSION_DURATION', 3600);
+define('COOKIE_SESSION_DURATION', 3600 * 24);
 
 // Where user is sent after login is done
 define('PORTAL_URL', 'http://example.xzy/portal/');
