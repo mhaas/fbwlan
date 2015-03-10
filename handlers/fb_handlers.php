@@ -162,20 +162,20 @@ function handle_checkin() {
     // Some exceptions can be caught and handled sanely,
     // e.g. Duplicate status message (506)
     try {
-        $response = $request->execute();
+        $response = $request->execute()->getGraphObject();
     } catch (FacebookRequestException $ex) {
         Flight::error($ex);
     } catch (\Exception $ex) {
         Flight::error($ex);
     }
-
-    // Everything is OK, users gets access and is handed back to Gateway
-    login_success();
-
-    // TODO: show a success message?
-    // This would probably depend on the gateway
+    $postid = $response->asArray['id'];
+    $posturl = 'https://www.facebook.com/' . $postid;
+    Flight::render('checkin',
+        array(
+            'loginurl' => login_success(False),
+            'posturl' => $posturl,
+    ));
 }
-    
 
 function fblogin() {
 
@@ -258,11 +258,16 @@ function handle_login() {
 }
 
 
-function login_success() {
+function login_success($redirect = True) {
     //  http://" . $gw_address . ":" . $gw_port . "/wifidog/auth?token=" . $token
     $token = make_token();
-    Flight::redirect('http://' . $_SESSION['gw_address'] . ':'
-        . $_SESSION['gw_port'] . '/wifidog/auth?token=' . $token);
+    $url = 'http://' . $_SESSION['gw_address'] . ':'
+        . $_SESSION['gw_port'] . '/wifidog/auth?token=' . $token;
+    if ($redirect) {
+        Flight::redirect($url);
+    } else {
+        return $url;
+    }
 }
 
 

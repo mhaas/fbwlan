@@ -63,4 +63,7 @@ define('COOKIE_SESSION_DURATION', 3600 * 24);
 // Where user is sent after login is done
 define('PORTAL_URL', 'http://example.xzy/portal/');
 
+// Display helpful message to the FB review people
+define('FB_REVIEW', False);
+
 ?>
