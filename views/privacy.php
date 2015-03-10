@@ -23,14 +23,14 @@
                 <p>
                     <?php
                     echo ' ';
-                    echo _('Beyond Facebook, we assign and store a randomly generated wifi access token for your computer which expires after');
+                    echo _('Beyond Facebook, we assign and store a randomly generated WLAN access token for your computer which expires after');
                     echo ' ' . $session_duration . _(' minutes.');
                     echo ' ';
                     echo _('To provide access to the internet, we store the MAC address of your computer and the IP address assigned by us.');
                     echo ' ';
                     echo _('The MAC address and the IP address are used to whitelist your computer.');
                     echo ' ';
-                    echo _('They are deleted once your wifi session expires.');
+                    echo _('They are deleted once your WLAN session expires.');
                     ?>
                 </p>
                 <p> <?php
@@ -68,7 +68,7 @@
                         . _('full privacy policy.') . '</a>';
                     echo ' ';
                     echo _('In particular, other parts of our offerings beyond'.
-                            ' wifi access may be subject to different privacy policies.');
+                            ' WLAN access may be subject to different privacy policies.');
                     echo '</p>';
                 }
                 ?>

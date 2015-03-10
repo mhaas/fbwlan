@@ -24,7 +24,7 @@
                     echo ' ';
                     echo sprintf(_('You can log in with Facebook and check in to %s on Facebook.'), $page_name);
                     echo ' ';
-                    echo _('But you can\'t connect to our Wifi. For that, you need to be in our building.');
+                    echo _('But you can\'t connect to our WLAN. For that, you need to be in our building.');
                     echo '</p>';
                     echo '<p>';
                     echo '<a class="pure-button pure-button-primary" href="' . $page_url . '">';

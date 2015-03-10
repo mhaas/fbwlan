@@ -26,7 +26,7 @@ function render_boilerplate() {
     Flight::render('head',
         array(
             'my_url' => MY_URL,
-            'title' => _('WIFI at ') . PAGE_NAME,
+            'title' => _('WLAN at ') . PAGE_NAME,
         ),
         'head');
     Flight::render('foot',

@@ -3,7 +3,7 @@
        <div class="pure-u-1 pure-u-md-1-2">
         <div class="l-box">
         <p> <?php
-            echo _('We offer free Wifi.');
+            echo _('We offer free WLAN.');
             echo ' ';
             echo _('We\'d like to ask you to return the favor and check in to our location on Facebook.');
             echo ' ';
