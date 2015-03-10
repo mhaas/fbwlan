@@ -80,8 +80,7 @@ function handle_root() {
     Flight::render('root',
         array(
             'page_name' => PAGE_NAME,
-            'page_url' => MY_URL . 'login/?gw_id=demo&gw_address=' . parse_url(PORTAL_URL, PHP_URL_HOST) . '&gw_port=80',
-            'portal_url' => PORTAL_URL,
+            'page_url' => MY_URL . 'login/?gw_id=demo&gw_address=localhost&gw_port=80',
     ));
 
 }

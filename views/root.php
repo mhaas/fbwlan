@@ -17,22 +17,23 @@
                     echo _('You need to be connected to our WLAN Hotspot for complete functionality.');
                     ?>
                 </p>
-                <p> <?php
+                <?php if (FB_REVIEW) {
+                    echo '<p>';
                     echo ' ';
-                    echo _('However, you can try a demo mode!');
+                    echo _('However, there is a demo mode!');
                     echo ' ';
-                    echo _('After you log in with Facebook, you will be redirected to our website at');
+                    echo printf(_('You can log in with Facebook and check in to %s on Facebook.'), $page_name);
                     echo ' ';
-                    echo $portal_url;
-                    echo '.';
-                    ?>
-                </p>
-                <p>
-                    <a class="pure-button pure-button-primary" href="<?php echo $page_url; ?>">
-                        <i class="fa fa-play lg"></i>
-                        <?php echo 'Demo: Connect to ' .  $page_name . _(' on Facebook'); ?>
-                    </a>
-                </p>
+                    echo _('But you can\'t connect to our Wifi. For that, you need to be in our building.');
+                    echo '</p>';
+                    echo '<p>';
+                    echo '<a class="pure-button pure-button-primary" href="' . $page_url . '">';
+                    echo '<i class="fa fa-play lg"></i>';
+                    echo 'Demo: Connect to ' .  $page_name . _(' on Facebook');
+                    echo '</a>';
+                    echo '</p>';
+                    }
+                ?>
             </div>
         </div>
     </div>
