@@ -22,7 +22,7 @@
                     echo ' ';
                     echo _('However, there is a demo mode!');
                     echo ' ';
-                    echo printf(_('You can log in with Facebook and check in to %s on Facebook.'), $page_name);
+                    echo sprintf(_('You can log in with Facebook and check in to %s on Facebook.'), $page_name);
                     echo ' ';
                     echo _('But you can\'t connect to our Wifi. For that, you need to be in our building.');
                     echo '</p>';
