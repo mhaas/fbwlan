@@ -20,7 +20,7 @@
                     // If the App is in review mode, then disable the login button. Or there will be an error message //
                     if (FB_REVIEW) {
                         echo '<div class="error-message">';
-                        echo _('Note: if you are outside our Network, the button will not work!');
+                        echo _('Note: You are outside our Network. I have disabled the button for you.');
                         echo '</div>';
                         $class = ' pure-button-disabled';
                         $url = '#';
