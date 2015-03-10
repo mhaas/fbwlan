@@ -167,7 +167,7 @@ function handle_checkin() {
     } catch (\Exception $ex) {
         Flight::error($ex);
     }
-    $postid = $response->asArray['id'];
+    $postid = $response->asArray()['id'];
     $posturl = 'https://www.facebook.com/' . $postid;
     Flight::render('checkin',
         array(
