@@ -8,7 +8,7 @@
         <div class="pure-u-1 pure-u-md-1-2">
             <div class="l-box">
                 <p>
-                    <a href="<?php echo $retry_url; ?>" class="pure-button pure-button-primary">
+                    <a href="<?php echo $retry_url; ?>" class="pure-button button-secondary">
                         <i class="fa fa-play fa-lg"></i>
                         <?php echo _('Enter access code'); ?>
                     </a>
