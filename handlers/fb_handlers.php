@@ -202,6 +202,8 @@ function handle_access_code() {
     render_boilerplate();
     $request = Flight::request();
     $code = $request->query->access_code;
+    $code = strtolower(trim($code));
+
     if (empty($code)) {
         Flight::render('denied_code', array(
             'msg' => _('No access code sent.'),
