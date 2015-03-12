@@ -1,3 +1,4 @@
+AddDefaultCharset UTF-8
 RewriteEngine On
 # RewriteBase / is required to prevent endless internal redirects
 # Note: http://stackoverflow.com/a/12106419
