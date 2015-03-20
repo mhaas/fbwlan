@@ -66,4 +66,11 @@ define('PORTAL_URL', 'http://example.xzy/portal/');
 // Display helpful message to the FB review people
 define('FB_REVIEW', False);
 
+// Where you host your copy of the code.
+// If you did not modify anything, use the github
+// below. Otherwise, the AGPL requires that you provide
+// a download link for your modified sources (unless
+// you're under some special circumstances, see the license).
+define('CODE_URL', 'https://www.github.com/mhaas/fbwlan/')
+
 ?>
