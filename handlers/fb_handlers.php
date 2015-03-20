@@ -116,7 +116,6 @@ function handle_rerequest_permission() {
     Flight::render('rerequest_permission', array(
         'fburl' => $fb_login_url,
         ));
-
 }
 
 // In the FB callback, we show a form to the user
@@ -136,9 +135,11 @@ function handle_fb_callback() {
     if ($session) {
         $_SESSION['FBTOKEN'] = $session->getToken();
         if (check_permissions($session)) {
+            $_SESSION['FB_CHECKIN_NONCE'] = make_nonce();
             Flight::render('fb_callback', array(
                 'post_action' => MY_URL .'checkin',
                 'place_name' => PAGE_NAME,
+                'nonce' => $_SESSION['FB_CHECKIN_NONCE'],
                 ));
         } else {
             if (ARRAY_KEY_EXISTS('FB_REREQUEST', $_SESSION) && $_SESSION['FB_REREQUEST']) {
@@ -160,6 +161,36 @@ function handle_fb_callback() {
 
 function handle_checkin() {
     render_boilerplate();
+    // This happens if we unset the nonce below.
+    // Or if the nonce was never set, in which case the user
+    // shouldn't be here.
+    $msg1 = _('It looks like you accidentally hit the refresh button or got here by accident.');
+    $msg2 = _('We prevented a double post of your message.');
+
+    if (! array_key_exists('FB_CHECKIN_NONCE', $_SESSION)) {
+        Flight::render('denied_fb', array(
+            'msg' => $msg1 . ' ' . $msg2,
+        ));
+        Flight::stop();
+    }
+    $nonce = $_SESSION['FB_CHECKIN_NONCE'];
+    if (empty($nonce)) {
+        Flight::render('denied_fb', array(
+            'msg' => $msg1 . ' '. $msg2,
+        ));
+        Flight::stop();
+    }
+    $submitted_nonce = Flight::request()->query->nonce;
+    if (empty($submitted_nonce)) {
+        Flight::error(new Exception('No nonce in form submission!'));
+    }
+    if ($nonce !== $submitted_nonce) {
+        Flight::error(new Exception('Nonces don\'t match!'));
+    }
+    // Now, make double submissions impossible by discarding the
+    // nonce
+    unset($_SESSION['FB_CHECKIN_NONCE']);
+
     $token = $_SESSION['FBTOKEN'];
     if (empty($token)) {
         Flight::error(new Exception('No FB token in session!'));
@@ -300,4 +331,9 @@ function handle_privacy() {
         'imprint_url' => IMPRINT_URL,
     ));
 
+}
+
+
+function make_nonce() {
+    return urlencode(uniqid ('', true));
 }
