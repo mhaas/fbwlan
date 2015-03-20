@@ -310,5 +310,8 @@ due to the *sleep 10* call. The upside is that it works.
 
 
 
+## License ##
 
-
+FBWLAN is licensed under the AGPL. The files in views/* bear no
+copyright notice for practical reasons, but they carry the same
+license. 
