@@ -48,7 +48,7 @@ function make_token() {
     clear_old_tokens();
     $db = Flight::db();
     $token = generate_token();
-    $stmt = $db->prepare('INSERT INTO tokens (token) VALUES (:token)');
+    $stmt = $db->prepare('INSERT INTO tokens (token,date) VALUES (:token,NOW())');
     $stmt->bindParam(':token', $token);
     $stmt->execute();
     return $token;
