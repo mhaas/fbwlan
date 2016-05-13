@@ -198,7 +198,7 @@ function handle_checkin() {
     $session = new FacebookSession($token);
     $message = Flight::request()->query->message;
 
-    $config = array(place => PAGE_ID);
+    $config = array('place' => PAGE_ID);
     if (! empty($message)) {
         $config['message'] = $message;
     }
