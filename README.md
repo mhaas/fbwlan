@@ -192,38 +192,10 @@ Facebook in the **fb** ipset. Add this to end of the file:
 
     ipset=/facebook.com/fbcdn.net/akamaihd.net/fb
 
-Finally, allow the **fb** ipset in the firewall. This has to happen
-after Wifidog has set up its rules so you can't put it into
-*/etc/firewall.user*. 
+Finally, allow the **fb** ipset in the firewall. Add this under the
+**FirewallRuleSet unknown-users** section in */etc/wifidog.conf*
 
-    cat <<EOF > /etc/init.d/wifidog-fw-extra
-    #!/bin/sh /etc/rc.common
-    START=70
-
-    start() {
-        # Sleep a bit so Wifidog has time to do its own iptables calls
-        sleep 10
-        # We may get called multiple times, so make sure the rule is only set once
-        if  ! iptables -C WiFiDog_br-lan_AuthServers -m set --match-set fb dst -j ACCEPT 2>/dev/null; then
-                logger -t wifidog "Enabling extra firewall rules"
-            iptables -A WiFiDog_br-lan_AuthServers -m set --match-set fb dst -j ACCEPT
-        else
-            logger -t wifidog "Extra firewall rules already enabled. Bye."
-        fi
-
-    }
-
-    stop() {
-        if iptables -C WiFiDog_br-lan_AuthServers -m set --match-set fb dst -j ACCEPT 2>/dev/null; then
-                logger -t wifidog "Disabling extra firewall rules"
-                iptables -D WiFiDog_br-lan_AuthServers -m set --match-set fb dst -j ACCEPT
-        else
-                logger -t wifidog "Extra firewall rules already disabled. Bye."
-        fi
-    }
-
-    EOF
-    chmod +x /etc/init.d/wifidog-fw-extra
+    FirewallRule allow to-ipset fb
 
 ### Testing the setup ###
 Start wifidog and reload the firewall:
